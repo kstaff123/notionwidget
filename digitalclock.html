@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.cdnfonts.com/css/bebas-neue" rel="stylesheet">
+                
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(30,28,38,255);
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            justify-content: center; /* Center the boxes horizontally */
+            gap: 10px; /* Adjust the gap between boxes */
+            position: relative; /* Required for positioning the line */
+        }
+
+        .box {
+            flex: 1;
+            width: calc(50% - 10px); /* Adjust the width to control the gap */
+            height: calc(80vw - 20px); /* Maintain aspect ratio */
+            background-color: #5865F2;
+            border-radius: 50px;
+            display: flex;
+            flex-direction: column; /* Allow vertical stacking of elements */
+            justify-content: center;
+            align-items: center;
+            font-family: 'Bebas Neue', sans-serif; /* Specify font family here */
+            font-weight: bold;
+            font-size: 250pt;
+            color: white;
+            position: relative; /* Required for stacking order */
+            z-index: 1; /* Ensure the boxes appear above the line */
+        }
+
+        .line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%; /* Set width to create a horizontal line */
+            height: 2px; /* Set height to specify line thickness */
+            background-color: white;
+            transform: translateY(-50%);
+            z-index: 2; /* Ensure the line appears above the boxes */
+        }
+
+        .pm{
+            position: absolute;
+            bottom: 30px; /* Adjust the distance from the bottom */
+            left: 30px; /* Adjust the distance from the left */
+            font-size: 55px; /* Adjust font size */
+            color: white;
+            z-index: 3; /* Ensure the text appears above everything */
+        }
+        .friday {
+            position: absolute;
+            bottom: 30px; /* Adjust the distance from the bottom */
+            right: 30px; /* Adjust the distance from the left */
+            font-size: 55px; /* Adjust font size */
+            color: white;
+            z-index: 3; /* Ensure the text appears above everything */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box" id="hoursBox">
+            <span id="hours">00</span>
+            <span class="pm" id="amPm">AM</span>
+        </div>
+        <div class="box" id="minutesBox">
+            <span id="minutes">00</span>
+            <span class="friday" id="dayOfWeek">Friday</span>
+        </div>
+        <div class="line"></div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let amPm = "AM";
+
+            if (hours > 12) {
+                hours -= 12;
+                amPm = "PM";
+            }
+
+            const minutes = now.getMinutes();
+            const dayOfWeek = getDayOfWeek(now.getDay());
+
+            document.getElementById("hours").textContent = formatTimeComponent(hours);
+            document.getElementById("amPm").textContent = amPm;
+            document.getElementById("minutes").textContent = formatTimeComponent(minutes);
+            document.getElementById("dayOfWeek").textContent = dayOfWeek;
+        }
+
+        function formatTimeComponent(value) {
+            return value < 10 ? "0" + value : value.toString();
+        }
+
+        function getDayOfWeek(dayIndex) {
+            const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            return days[dayIndex];
+        }
+
+        updateTime();
+        setInterval(updateTime, 1000); // Update time every second
+    </script>
+</body>
+</html>
