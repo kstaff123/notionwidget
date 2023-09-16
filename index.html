@@ -1,1 +1,64 @@
-<h1>hi</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move-In Day Countdown</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+            text-align: center;
+            background-color: rgba(30,28,38,255); /* Discord blurple background color */
+            color: white; /* Text color */
+        }
+
+        #countdown-container {
+            display: inline-block;
+            padding: 20px;
+            background-color: #5865F2; /* Semi-transparent black background */
+            border-radius: 10px; /* Rounded corners */
+        }
+        #countdown{
+            font-size: 15pt;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 23pt;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown-container">
+        <h1>Move-In Day Countdown</h1>
+        <div id="countdown"></div>
+    </div>
+
+    <script>
+        // Set the move-in date (YYYY, MM, DD, HH, MM, SS)
+        const moveInDate = new Date(2023, 8, 21, 14, 30, 0); // September is represented by 8
+
+        function updateCountdown() {
+            const currentDate = new Date();
+            const timeLeft = moveInDate - currentDate;
+
+            if (timeLeft <= 0) {
+                document.getElementById('countdown').innerHTML = "Move-In Day is here!";
+            } else {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById('countdown').innerHTML = `
+                    ${days}d ${hours}h ${minutes}m`;
+            }
+        }
+
+        // Initial call to set the countdown
+        updateCountdown();
+
+        // Update the countdown every second
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
